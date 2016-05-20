@@ -1,0 +1,14 @@
+scan
+C:\Users\hp\Desktop\JBdir
+C:\Users\hp\Desktop\JBdirSecond
+*ForCopy*
+5000
+false
+false
+
+
+
+start
+
+
+>scan –input "C:\Users\hp\Desktop\JBdir" –output "C:\Users\hp\Desktop\JBdirSecond" –mask "*ForCopy*" –waitInterval 5000 –includeSubfolders true –autoDelete false
