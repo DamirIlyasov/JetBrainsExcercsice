@@ -179,7 +179,7 @@ public class Main {
                 }
                 case " –mask ": {
                     for (String mask1 : inputArray[i+1].split("")){
-                        if (mask1.equals("!") || mask1.equals("~") || mask1.equals("`") || mask1.equals("@") || mask1.equals("#") || mask1.equals("№") || mask1.equals("$") || mask1.equals("%") || mask1.equals("^") || mask1.equals("&") || mask1.equals("(") || mask1.equals(")") || mask1.equals("-") || mask1.equals("\\") || mask1.equals("/")){
+                        if (mask1.equals("!") || mask1.equals("~") || mask1.equals("`") || mask1.equals("@") || mask1.equals("#") || mask1.equals("№") || mask1.equals("$") || mask1.equals("%") || mask1.equals("^") || mask1.equals("&") || mask1.equals("(") || mask1.equals(")") || mask1.equals("-") || mask1.equals("\\") || mask1.equals("/") || mask1.equals("|") || mask1.equals(":") || mask1.equals(";") || mask1.equals("'") || mask1.equals(",") || mask1.equals("<") || mask1.equals(">") || mask1.equals("/")){
                             checher = false;
                             errorMsg = errorMsg + "Illegal symbols in mask: "+ inputArray[i+1]+"\n";
                             break;
