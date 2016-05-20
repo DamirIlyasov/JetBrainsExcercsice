@@ -9,16 +9,16 @@ import static java.lang.Thread.sleep;
 
 public class Main {
 
-    public static String dirIn;
-    public static String dirOut;
-    public static String mask;
-    public static int waitInterval;
-    public static boolean includeSubfolders;
-    public static boolean autoDelete;
-    public static boolean checher = true;
-    public static String errorMsg= "";
-    public static int scanCounter = 0;
-    public static int dirCounter = 0;
+    public static String dirIn;                 // Входная директория
+    public static String dirOut;                // Выходная директория
+    public static String mask;                  // Маска
+    public static int waitInterval;             // Интервал сканирования
+    public static boolean includeSubfolders;    // Включение обработки поддиректории
+    public static boolean autoDelete;           // Удалять ли файлы после копирования?
+    public static boolean checker = true;       // Проверяет возможность запуска скана
+    public static String errorMsg= "";          // строка ошибки.(Если есть ошибки, они плюсуются сюда)
+    public static int scanCounter = 0;          // Считает кол-во сканеров. Если больше одного, то нельзя будет запускать второй
+    public static int dirCounter = 0;           // Считает кол-во директорий
 
 
     public static void main(String[] args) throws IOException {
@@ -59,14 +59,14 @@ public class Main {
                     }
                 });
                 setParameters(inputAll);
-                if (checher) {                      // Если все входные данные нас устроили, то checker будет true. Тогда запускаем второй поток.
+                if (checker) {                      // Если все входные данные нас устроили, то checker будет true. Тогда запускаем второй поток.
                     myThread.start();
                 } else {
                     scanCounter = 0;
                     errorMsg = "Error: Scanner was not started due to following reasons:" + "\n" + errorMsg;       // Иначе выводим сообщение об ошибке
                     System.out.println(errorMsg);                                                                  // С указанием причины ошибки
                     errorMsg = "";
-                    checher = true;
+                    checker = true;
                 }
             }                               //stop в нашем случае безопасен, т.к. мы останавливаем скан только после завершения сканирования.
             if (input.equals("exit")) {                                         //Если на вход получаем exit, то убиваем второй поток, обнуляем переменные
@@ -160,7 +160,7 @@ public class Main {
                     dirIn = inputArray[++i];
                     File dirIn1 = new File(dirIn);
                     if (!dirIn1.isDirectory()){
-                        checher = false;
+                        checker = false;
                         errorMsg = "Illegal symbols in input path: "+ dirIn+"\n";
                     }
                     count++;
@@ -171,7 +171,7 @@ public class Main {
                     dirOut = inputArray[++i];
                     File dirOut1 = new File(dirOut);
                     if (!dirOut1.isDirectory()){
-                        checher = false;
+                        checker = false;
                         errorMsg = errorMsg + "Illegal symbols in output path: "+ dirOut +"\n";
                     }
                     dirOut=dirOut+"\\";
@@ -181,7 +181,7 @@ public class Main {
                 case " –mask ": {
                     for (String mask1 : inputArray[i+1].split("")){
                         if (mask1.equals("!") || mask1.equals("~") || mask1.equals("`") || mask1.equals("@") || mask1.equals("#") || mask1.equals("№") || mask1.equals("$") || mask1.equals("%") || mask1.equals("^") || mask1.equals("&") || mask1.equals("(") || mask1.equals(")") || mask1.equals("-") || mask1.equals("\\") || mask1.equals("/") || mask1.equals("|") || mask1.equals(":") || mask1.equals(";") || mask1.equals("'") || mask1.equals(",") || mask1.equals("<") || mask1.equals(">") || mask1.equals("/")){
-                            checher = false;
+                            checker = false;
                             errorMsg = errorMsg + "Illegal symbols in mask: "+ inputArray[i+1]+"\n";
                             break;
                         }
@@ -202,7 +202,7 @@ public class Main {
                 case "–waitInterval":{
                     waitInterval = new Integer(inputArray2[++i]);
                     if (waitInterval < 0){
-                        checher = false;
+                        checker = false;
                         errorMsg = errorMsg + "Incorrect value for waitInterval: "+ waitInterval+" (must be positive int value)"+"\n";
                     }
                     count++;
@@ -216,7 +216,7 @@ public class Main {
                         includeSubfolders = false;
                     }
                     if (!inputArray2[i].equals("true") && !inputArray2[i].equals("false")){
-                        checher = false;
+                        checker = false;
                         errorMsg = errorMsg + "Invalid value for includeSubfolders: "+ inputArray2[i] + " (must be true or false)"+"\n";
                     }
                     count++;
@@ -230,7 +230,7 @@ public class Main {
                         autoDelete = false;
                     }
                     if (!inputArray2[i].equals("true") && !inputArray2[i].equals("false")){
-                        checher = false;
+                        checker = false;
                         errorMsg = errorMsg + "Invalid value for autoDelete: "+ inputArray2[i] + " (must be true or false)"+"\n";
                     }
                     count++;
@@ -240,7 +240,7 @@ public class Main {
             }
         }
         if (count != 6){
-            checher = false;
+            checker = false;
             errorMsg = errorMsg + " Not all values are entered.";
         }
     }
@@ -263,7 +263,7 @@ public class Main {
         waitInterval = 0;
         includeSubfolders = Boolean.parseBoolean(null);
         autoDelete = Boolean.parseBoolean(null);
-        checher = true;
+        checker = true;
         errorMsg= "";
     }
 
