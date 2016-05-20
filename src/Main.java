@@ -62,6 +62,7 @@ public class Main {
                 if (checher) {                      // Если все входные данные нас устроили, то checker будет true. Тогда запускаем второй поток.
                     myThread.start();
                 } else {
+                    scanCounter = 0;
                     errorMsg = "Error: Scanner was not started due to following reasons:" + "\n" + errorMsg;       // Иначе выводим сообщение об ошибке
                     System.out.println(errorMsg);                                                                  // С указанием причины ошибки
                     errorMsg = "";
